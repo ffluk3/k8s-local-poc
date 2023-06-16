@@ -66,3 +66,24 @@ kubectl --namespace default port-forward $POD_NAME 9021:$CONTAINER_PORT
 ```
 
 You can then view bindings at http://localhost:9021/__admin/webapp
+
+```shell
+# 1. Download the latest binary (~101 MB):
+os_specific_file=telepresence-darwin-arm64 # telepresence-darwin-amd64 for Intel Macs
+sudo curl -fL https://app.getambassador.io/download/tel2oss/releases/download/v2.14.0/$os_specific_file -o /usr/local/bin/telepresence
+
+# 2. Make the binary executable:
+sudo chmod a+x /usr/local/bin/telepresence
+
+# 3. Install into your local cluster (check that you are in minikube via (kubectl config current-context)
+telepresence helm install
+
+# 4. Connect to telepresence in the target cluster
+sudo telepresence connect
+
+# 5. Forward traffic from local spring boot (TODO: leverage environment file)
+telepresence intercept sample-svc --port 8080:80 --env-file /tmp/hello.env
+
+# 6. Confirm the service by curling it. Bonus: use port forwarding to mess with wiremock
+curl http://sample-svc
+```

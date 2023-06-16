@@ -16,7 +16,7 @@ public class HelloController {
     public String index() {
         StringBuilder thirdPartyContent = new StringBuilder();
 
-        String serviceURL = "http://wiremock-1686939037";
+        String serviceURL = "http://wiremock:9021";
 
         if(System.getenv("SERVICE_URL") != null) {
             serviceURL = System.getenv("SERVICE_URL");
